@@ -32,7 +32,6 @@ function App() {
       .catch(() => 'error');
   }, []);
 
-
   return (
     <div
       className="App"
@@ -85,7 +84,6 @@ function App() {
               gap: '8px',
             }}
           >
-
             <span>
               <input
                 name="searchbar"
