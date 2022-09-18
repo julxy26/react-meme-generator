@@ -24,7 +24,7 @@ function App() {
       })
       .then((data) => {
         for (i = 0; i < data.length; i++) {
-          memeURL.push(data.blank);
+          memeURL.push(data[i].blank);
           setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
         }
       })
