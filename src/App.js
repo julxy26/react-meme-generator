@@ -10,8 +10,7 @@ function App() {
   const [searchInput, setSearchInput] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const urlTemp = 'https://api.memegen.link/images/';
-  const generatedURL = `${urlTemp}${searchInput}/${topText}/${bottomText}`;
+  const generatedURL = `https://api.memegen.link/images/${searchInput}/${topText}/${bottomText}`;
 
   const downloadMeme = () => {
     saveAs(generatedURL, 'Meme.jpg');
