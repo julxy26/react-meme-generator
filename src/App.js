@@ -6,11 +6,11 @@ const memeURL = [];
 const memeIdsAndNames = [];
 
 function App() {
-  const [memeImage, setMemeImage] = useState('');
   const [selectMemeName, setSelectMemeName] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
   const generatedURL = `https://api.memegen.link/images/${selectMemeName}/${topText}/${bottomText}`;
+  const [memeImage, setMemeImage] = useState('');
 
   const downloadMeme = () => {
     saveAs(generatedURL, selectMemeName);
@@ -27,14 +27,13 @@ function App() {
           memeURL.push(data[i].blank);
           memeIdsAndNames.push([data[i].id, data[i].name]);
         }
-        setMemeImage(
-          !selectMemeName
-            ? memeURL[Math.floor(Math.random() * memeURL.length)]
-            : generatedURL,
-        );
+
+        selectMemeName
+          ? setMemeImage(`https://api.memegen.link/images/${selectMemeName}`)
+          : setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
       })
       .catch(() => 'error');
-  }, [generatedURL, selectMemeName]);
+  }, [selectMemeName]);
 
   return (
     <div
@@ -106,7 +105,7 @@ function App() {
                 }}
               >
                 {memeIdsAndNames.map((name) => (
-                  <option key={name[0]} value={name[0]}>
+                  <option key={`memeName-${name[0]}`} value={name[0]}>
                     {name[1]}
                   </option>
                 ))}
