@@ -3,17 +3,18 @@ import { saveAs } from 'file-saver';
 import { useEffect, useState } from 'react';
 
 const memeURL = [];
+const memeNames = [];
 let i;
 
 function App() {
   const [memeImage, setMemeImage] = useState('');
-  const [searchInput, setSearchInput] = useState('');
+  const [selectMemeName, setSelectMemeName] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const generatedURL = `https://api.memegen.link/images/${searchInput}/${topText}/${bottomText}`;
+  const generatedURL = `https://api.memegen.link/images/${selectMemeName}/${topText}/${bottomText}`;
 
   const downloadMeme = () => {
-    saveAs(generatedURL, 'Meme.jpg');
+    saveAs(generatedURL, selectMemeName);
     console.log('Hurray! It worked!');
   };
 
@@ -25,6 +26,7 @@ function App() {
       .then((data) => {
         for (i = 0; i < data.length; i++) {
           memeURL.push(data[i].blank);
+          memeNames.push([data[i].id, data[i].name]);
           setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
         }
       })
@@ -84,15 +86,20 @@ function App() {
             }}
           >
             <span>
-              <input
-                name="searchbar"
-                id="searchbar"
-                placeholder="search for a meme"
-                value={searchInput}
+              <label htmlFor="memeName">Choose a meme</label>
+              <select
+                name="memeName"
+                value={selectMemeName}
                 onChange={(event) => {
-                  setSearchInput(event.currentTarget.value);
+                  setSelectMemeName(event.currentTarget.value);
                 }}
-              />
+              >
+                {memeNames.map((name) => (
+                  <option key={name} value={name[0]}>
+                    {name[1]}
+                  </option>
+                ))}
+              </select>
             </span>
 
             <span>
