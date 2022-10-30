@@ -3,8 +3,7 @@ import { saveAs } from 'file-saver';
 import { useEffect, useState } from 'react';
 
 const memeURL = [];
-const memeNames = [];
-let i;
+const memeIdsAndNames = [];
 
 function App() {
   const [memeImage, setMemeImage] = useState('');
@@ -24,20 +23,26 @@ function App() {
         return response.json();
       })
       .then((data) => {
-        for (i = 0; i < data.length; i++) {
+        for (let i = 0; i < data.length; i++) {
           memeURL.push(data[i].blank);
-          memeNames.push([data[i].id, data[i].name]);
-          setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
+          memeIdsAndNames.push([data[i].id, data[i].name]);
         }
+        setMemeImage(
+          !selectMemeName
+            ? memeURL[Math.floor(Math.random() * memeURL.length)]
+            : generatedURL,
+        );
       })
       .catch(() => 'error');
-  }, []);
+  }, [generatedURL, selectMemeName]);
 
   return (
     <div
       className="App"
       style={{
-        display: 'grid',
+        display: 'flex',
+        flexDirection: 'column',
+        flexWrap: '100px',
         width: '100vw',
         height: '100vh',
         backgroundColor: '#9c90f5',
@@ -81,28 +86,34 @@ function App() {
             style={{
               display: 'flex',
               justifyItems: 'center',
-              alignItems: 'center',
+              alignItems: 'flex-start',
               gap: '8px',
+              marginTop: '7px',
             }}
           >
-            <span>
+            <div style={{ marginTop: '0px' }}>
               <label htmlFor="memeName">Choose a meme</label>
               <select
+                style={{
+                  marginLeft: '7px',
+                  width: '160px',
+                  height: '34px',
+                }}
                 name="memeName"
                 value={selectMemeName}
                 onChange={(event) => {
                   setSelectMemeName(event.currentTarget.value);
                 }}
               >
-                {memeNames.map((name) => (
-                  <option key={name} value={name[0]}>
+                {memeIdsAndNames.map((name) => (
+                  <option key={name[0]} value={name[0]}>
                     {name[1]}
                   </option>
                 ))}
               </select>
-            </span>
+            </div>
 
-            <span>
+            <div>
               <span style={{ marginRight: '5px' }}>
                 <label htmlFor="top">Top text</label>
               </span>
@@ -113,9 +124,9 @@ function App() {
                   setTopText(event.currentTarget.value);
                 }}
               />
-            </span>
+            </div>
 
-            <span>
+            <div>
               <span style={{ marginRight: '5px' }}>
                 <label htmlFor="bottom">Bottom text</label>
               </span>
@@ -126,7 +137,7 @@ function App() {
                   setBottomText(event.currentTarget.value);
                 }}
               />
-            </span>
+            </div>
 
             <div>
               <span>
