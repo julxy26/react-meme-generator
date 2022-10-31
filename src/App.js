@@ -4,16 +4,15 @@ import { useEffect, useState } from 'react';
 
 const memeURL = [];
 const memeIdsAndNames = [];
-
 function App() {
-  const [selectMemeName, setSelectMemeName] = useState('');
+  const [selectMemeId, setSelectMemeId] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const generatedURL = `https://api.memegen.link/images/${selectMemeName}/${topText}/${bottomText}`;
   const [memeImage, setMemeImage] = useState('');
+  const generatedURL = `https://api.memegen.link/images/${selectMemeId}/${topText}/${bottomText}`;
 
   const downloadMeme = () => {
-    saveAs(generatedURL, selectMemeName);
+    saveAs(generatedURL, selectMemeId);
     console.log('Hurray! It worked!');
   };
 
@@ -27,13 +26,14 @@ function App() {
           memeURL.push(data[i].blank);
           memeIdsAndNames.push([data[i].id, data[i].name]);
         }
-
-        selectMemeName
-          ? setMemeImage(`https://api.memegen.link/images/${selectMemeName}`)
-          : setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
+        setMemeImage(
+          selectMemeId
+            ? generatedURL
+            : memeURL[Math.floor(Math.random() * memeURL.length)],
+        );
       })
       .catch(() => 'error');
-  }, [selectMemeName]);
+  }, [selectMemeId, generatedURL]);
 
   return (
     <div
@@ -55,20 +55,7 @@ function App() {
       >
         Meme Generator
       </h1>
-      <div>
-        <img
-          src={memeImage}
-          alt="description"
-          height="500px"
-          style={{
-            border: '1px solid black',
-            borderRadius: '3px',
-            padding: '32px',
-            margin: '8px 50px',
-            backgroundColor: 'white',
-          }}
-        />
-      </div>
+
       <div
         style={{
           display: 'flex',
@@ -99,14 +86,13 @@ function App() {
                   height: '34px',
                 }}
                 name="memeName"
-                value={selectMemeName}
                 onChange={(event) => {
-                  setSelectMemeName(event.currentTarget.value);
+                  setSelectMemeId(event.currentTarget.value);
                 }}
               >
-                {memeIdsAndNames.map((name) => (
-                  <option key={`memeName-${name[0]}`} value={name[0]}>
-                    {name[1]}
+                {memeIdsAndNames.map((meme) => (
+                  <option key={`memeName-${meme[0]}`} value={meme[0]}>
+                    {meme[1]}
                   </option>
                 ))}
               </select>
@@ -156,6 +142,20 @@ function App() {
             </div>
           </div>
         </form>
+      </div>
+      <div>
+        <img
+          src={memeImage}
+          alt="description"
+          height="500px"
+          style={{
+            border: '1px solid black',
+            borderRadius: '3px',
+            padding: '32px',
+            margin: '5px 50px',
+            backgroundColor: 'white',
+          }}
+        />
       </div>
     </div>
   );
