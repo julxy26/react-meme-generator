@@ -26,14 +26,10 @@ function App() {
           memeURL.push(data[i].blank);
           memeIdsAndNames.push([data[i].id, data[i].name]);
         }
-        setMemeImage(
-          selectMemeId
-            ? generatedURL
-            : memeURL[Math.floor(Math.random() * memeURL.length)],
-        );
+        setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
       })
       .catch(() => 'error');
-  }, [selectMemeId, generatedURL]);
+  }, []);
 
   return (
     <div
@@ -76,6 +72,7 @@ function App() {
             name="memeName"
             onChange={(event) => {
               setSelectMemeId(event.currentTarget.value);
+              setMemeImage(generatedURL);
             }}
           >
             {memeIdsAndNames.map((meme) => (
