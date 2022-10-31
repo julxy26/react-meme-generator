@@ -8,7 +8,9 @@ function App() {
   const [selectMemeId, setSelectMemeId] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [memeImage, setMemeImage] = useState('');
+  const [memeImage, setMemeImage] = useState(
+    'https://api.memegen.link/images/doge',
+  );
   const generatedURL = `https://api.memegen.link/images/${selectMemeId}/${topText}/${bottomText}`;
 
   const downloadMeme = () => {
@@ -26,14 +28,9 @@ function App() {
           memeURL.push(data[i].blank);
           memeIdsAndNames.push([data[i].id, data[i].name]);
         }
-        setMemeImage(
-          !selectMemeId
-            ? memeURL[Math.floor(Math.random() * memeURL.length)]
-            : generatedURL,
-        );
       })
       .catch(() => 'error');
-  }, [selectMemeId, generatedURL]);
+  }, []);
 
   return (
     <div
