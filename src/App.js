@@ -26,10 +26,14 @@ function App() {
           memeURL.push(data[i].blank);
           memeIdsAndNames.push([data[i].id, data[i].name]);
         }
-        setMemeImage(memeURL[Math.floor(Math.random() * memeURL.length)]);
+        setMemeImage(
+          !selectMemeId
+            ? memeURL[Math.floor(Math.random() * memeURL.length)]
+            : generatedURL,
+        );
       })
       .catch(() => 'error');
-  }, []);
+  }, [selectMemeId]);
 
   return (
     <div
