@@ -60,88 +60,73 @@ function App() {
         style={{
           display: 'flex',
           justifyContent: 'center',
-          alignItems: 'center',
+          alignItems: 'flex-start',
+          gap: '8px',
+          marginTop: '7px',
         }}
       >
-        <form
-          onSubmit={(event) => {
-            event.preventDefault();
-          }}
-        >
-          <div
+        <div style={{ marginTop: '0px' }}>
+          <label htmlFor="memeName">Choose a meme</label>
+          <select
             style={{
-              display: 'flex',
-              justifyItems: 'center',
-              alignItems: 'flex-start',
-              gap: '8px',
-              marginTop: '7px',
+              marginLeft: '7px',
+              width: '160px',
+              height: '34px',
+            }}
+            name="memeName"
+            onChange={(event) => {
+              setSelectMemeId(event.currentTarget.value);
             }}
           >
-            <div style={{ marginTop: '0px' }}>
-              <label htmlFor="memeName">Choose a meme</label>
-              <select
-                style={{
-                  marginLeft: '7px',
-                  width: '160px',
-                  height: '34px',
-                }}
-                name="memeName"
-                onChange={(event) => {
-                  setSelectMemeId(event.currentTarget.value);
-                }}
-              >
-                {memeIdsAndNames.map((meme) => (
-                  <option key={`memeName-${meme[0]}`} value={meme[0]}>
-                    {meme[1]}
-                  </option>
-                ))}
-              </select>
-            </div>
+            {memeIdsAndNames.map((meme) => (
+              <option key={`memeName-${meme[0]}`} value={meme[0]}>
+                {meme[1]}
+              </option>
+            ))}
+          </select>
+        </div>
 
-            <div>
-              <span style={{ marginRight: '5px' }}>
-                <label htmlFor="top">Top text</label>
-              </span>
-              <input
-                name="top"
-                value={topText}
-                onChange={(event) => {
-                  setTopText(event.currentTarget.value);
-                }}
-              />
-            </div>
+        <div>
+          <span style={{ marginRight: '5px' }}>
+            <label htmlFor="top">Top text</label>
+          </span>
+          <input
+            name="top"
+            value={topText}
+            onChange={(event) => {
+              setTopText(event.currentTarget.value);
+            }}
+          />
+        </div>
 
-            <div>
-              <span style={{ marginRight: '5px' }}>
-                <label htmlFor="bottom">Bottom text</label>
-              </span>
-              <input
-                name="bottom"
-                value={bottomText}
-                onChange={(event) => {
-                  setBottomText(event.currentTarget.value);
-                }}
-              />
-            </div>
+        <div>
+          <span style={{ marginRight: '5px' }}>
+            <label htmlFor="bottom">Bottom text</label>
+          </span>
+          <input
+            name="bottom"
+            value={bottomText}
+            onChange={(event) => {
+              setBottomText(event.currentTarget.value);
+            }}
+          />
+        </div>
 
-            <div>
-              <span>
-                <button
-                  onClick={() => {
-                    setMemeImage(generatedURL);
-                  }}
-                >
-                  Generate
-                </button>
-              </span>
-              <span>
-                <button value="download" onClick={downloadMeme}>
-                  Download
-                </button>
-              </span>
-            </div>
-          </div>
-        </form>
+        <div>
+          <button
+            onClick={() => {
+              setMemeImage(generatedURL);
+              setTopText('');
+              setBottomText('');
+            }}
+          >
+            Generate
+          </button>
+
+          <button value="download" onClick={downloadMeme}>
+            Download
+          </button>
+        </div>
       </div>
       <div>
         <img
