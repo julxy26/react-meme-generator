@@ -127,6 +127,7 @@ function App() {
       </div>
       <div>
         <img
+          data-test-id="meme-image"
           src={memeImage}
           alt="description"
           height="500px"
