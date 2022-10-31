@@ -8,9 +8,7 @@ function App() {
   const [selectMemeId, setSelectMemeId] = useState('');
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
-  const [memeImage, setMemeImage] = useState(
-    'https://api.memegen.link/images/doge',
-  );
+  const [memeImage, setMemeImage] = useState('');
   const generatedURL = `https://api.memegen.link/images/${selectMemeId}/${topText}/${bottomText}`;
 
   const downloadMeme = () => {
