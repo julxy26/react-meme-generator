@@ -33,7 +33,7 @@ function App() {
         );
       })
       .catch(() => 'error');
-  }, [selectMemeId]);
+  }, [selectMemeId, generatedURL]);
 
   return (
     <div
