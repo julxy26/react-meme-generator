@@ -84,29 +84,29 @@ function App() {
         </div>
 
         <div>
-          <span style={{ marginRight: '5px' }}>
-            <label htmlFor="top">Top text</label>
-          </span>
-          <input
-            name="top"
-            value={topText}
-            onChange={(event) => {
-              setTopText(event.currentTarget.value);
-            }}
-          />
+          <label htmlFor="top" style={{ marginRight: '5px' }}>
+            <input
+              name="top"
+              value={topText}
+              onChange={(event) => {
+                setTopText(event.currentTarget.value);
+              }}
+            />
+            Top text
+          </label>
         </div>
 
         <div>
-          <span style={{ marginRight: '5px' }}>
-            <label htmlFor="bottom">Bottom text</label>
-          </span>
-          <input
-            name="bottom"
-            value={bottomText}
-            onChange={(event) => {
-              setBottomText(event.currentTarget.value);
-            }}
-          />
+          <label htmlFor="bottom" style={{ marginRight: '5px' }}>
+            <input
+              name="bottom"
+              value={bottomText}
+              onChange={(event) => {
+                setBottomText(event.currentTarget.value);
+              }}
+            />
+            Bottom text
+          </label>
         </div>
 
         <div>
